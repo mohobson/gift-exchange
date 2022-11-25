@@ -63,7 +63,7 @@ fromaddr = os.environ.get('fromaddr')
 subject = 'Gift Exchange Time'
 for member, addr in participants.items():
 	name = dictionary[member]
-	# print(member, name)
-	grid.sendgrid_email(addr, fromaddr, subject, name)
+	print(member, name)
+	# grid.sendgrid_email(addr, fromaddr, subject, name)
 
 
