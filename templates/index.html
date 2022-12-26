@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Messages {% endblock %}</h1>
+    <h1>{% block title %} Gift Exchange {% endblock %}</h1>
     {% for message in messages %}
         <div class='message'>
-            <h3>{{ message['title'] }}</h3>
-            <p>{{ message['content'] }}</p>
+            <h3>{{ message['name'] }}</h3>
+            <p>{{ message['email'] }}</p>
+            <input id="name{{ message['title'] }}" type="text">
+            <button>submit</button>
+
         </div>
     {% endfor %}
 {% endblock %}

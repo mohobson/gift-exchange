@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %} - FlaskApp</title>
-    <style>
+    <title>{% block title %} {% endblock %} - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <style>
         .message {
             padding: 10px;
             margin: 5px;
@@ -16,12 +17,12 @@
             text-decoration: none;
         }
 
-    </style>
+    </style> -->
 </head>
 <body>
     <nav>
-        <a href="{{ url_for('index') }}">FlaskApp</a>
-        <a href="#">About</a>
+        <a href="{{ url_for('index') }}">Index</a>
+        <a href="#">Link to nothing</a>
     </nav>
     <hr>
     <div class="content">

@@ -1,10 +1,10 @@
 from flask import Flask, render_template
 app = Flask(__name__)
 
-messages = [{'title': 'Message One',
-             'content': 'Message One Content'},
-            {'title': 'Message Two',
-             'content': 'Message Two Content'}
+messages = [{'name': 'name one',
+             'email': 'email one'},
+            {'name': 'name two',
+             'email': 'email two'}
             ]
 
 @app.route('/')
