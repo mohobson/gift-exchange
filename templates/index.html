@@ -4,6 +4,9 @@
     <h1>{% block title %} Gift Exchange {% endblock %}</h1>
     {% for message in messages %}
         <div class='message'>
+            <h1>Today is {{ day }}.</h1>
+            <a href="{{ url_for('info_page') }}">Participant Info</a>
+            <h1>......</h1>
             <h3>{{ message['name'] }}</h3>
             <p>{{ message['email'] }}</p>
             <input id="name{{ message['title'] }}" type="text">
