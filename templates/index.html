@@ -1,17 +1,13 @@
 {% extends 'base.html' %}
 
-{% block content %}
-    <h1>{% block title %} Gift Exchange {% endblock %}</h1>
-    {% for message in messages %}
-        <div class='message'>
-            <h1>Today is {{ day }}.</h1>
-            <a href="{{ url_for('info_page') }}">Participant Info</a>
-            <h1>......</h1>
-            <h3>{{ message['name'] }}</h3>
-            <p>{{ message['email'] }}</p>
-            <input id="name{{ message['title'] }}" type="text">
-            <button>submit</button>
 
-        </div>
-    {% endfor %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+    <h1>Home page</h1>
+    <p>Today is {{ day }}!</p>
+
+    <ul>
+      <li><a href="{{ url_for('participants_page') }}">List participants</a></li>
+    </ul>
 {% endblock %}
