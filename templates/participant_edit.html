@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Edit participant{% endblock %}
+{% block content %}
+    <h1 class="title">Edit participant</h1>
+
+    <form action="" method="post" name="participant_edit">
+      <div class="field">
+        <label for="participant name" class="label">Participant Name</label>
+        <div class="control">
+          <input type="text" name="participant name" class="input" required="required"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email" class="label">Email</label>
+        <div class="control">
+          <input type="email" name="email" class="input"/>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-primary is-small">Save</button>
+        </div>
+      </div>
+    </form>
+{% endblock %}

@@ -4,32 +4,20 @@
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <!-- <style>
-        .message {
-            padding: 10px;
-            margin: 5px;
-            background-color: #f3f3f3
-        }
-        nav a {
-            color: #d64161;
-            font-size: 3em;
-            margin-left: 50px;
-            text-decoration: none;
-        }
-
-    </style> -->
 </head>
 <body>
     <header>
         <nav>
             <a href="{{ url_for('home_page') }}">Home</a>
             <a href="{{ url_for('participants_page') }}">Participants</a>
+            <a href="{{ url_for('participant_add_page')}}">Add Participant</a>
             <a href="#">Link to nothing</a>
         </nav>
     </header>
     <hr>
     <div class="content">
-        {% block content %} {% endblock %}
+        {% block content %}{% endblock %}
+        
     </div>
 </body>
 </html>

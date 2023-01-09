@@ -11,7 +11,6 @@ messages = [{'name': 'name one',
              'email': 'email two'}
             ]
 
-
 # currently on 3
 # https://web.itu.edu.tr/uyar/fad/data-model.html
 def create_app():
@@ -20,10 +19,10 @@ def create_app():
 
     app.add_url_rule("/", view_func=views.home_page)
     app.add_url_rule("/participants", view_func=views.participants_page)
+    app.add_url_rule("/participants/<int:participant_key>", view_func=views.participant_page)
+    app.add_url_rule("/new-participant", view_func=views.participant_add_page, methods=["GET", "POST"])
 
     db = Database()
-    db.add_participant(Participant("person1", email="123@aol.com"))
-    db.add_participant(Participant("person2"))
     app.config["db"] = db
 
     @app.route('/')
@@ -33,23 +32,9 @@ def create_app():
         day_name='dayname'
         print(day_name)
         return render_template('index.html', day=day_name, messages=messages)
-
-    @app.route('/participants')
-    def participant_page():
-        return render_template("participant.html")
-
-    @app.route('/participant')
-    def participant_add_page():
-        if request.method == "GET":
-            return render_template(
-                "participant.html"
-            )
-            
-        else:
-            form_title = request.form["title"]
-            person_name = request.form["name"]
-            # email = Email(form_title, name=person_name if person_name else None)
+    
     return app
+
 
 if __name__ == "__main__":
     app = create_app()

@@ -2,42 +2,19 @@
 {% block title %}Info{% endblock %}
 {% block content %}
     <h1 class="title">Participants</h1>
-
     {% if participants %}
     <table class="table is-striped is-fullwidth">
         {% for participant_key, participant in participants %}
         <tr>
             <td>
-            {{ participant.participant_name }}
-            {% if participant.email %}
-            ({{ participant.email }})
-            {% endif %}
+            <a href="{{ url_for('participant_page', participant_key=participant_key) }}">
+                {{ participant.participant }}
+                {% if participant.email %} ({{ participant.email }}) {% endif %}
+            </a>
             </td>
         </tr>
         {% endfor %}
     </table>
     {% endif %}
-
-    <form action="" method="post" name="edit_info">
-        <div class="field">
-            <label for="name" class="label">Name</label>
-            <div class="control">
-                <input type="text" name="name" class="input" required="required"/>
-            </div>
-        </div>
-    
-        <div class="field">
-            <label for="email" class="label">Email</label>
-            <div class="control">
-                <input type="email" name="email" class="input" required="required"/>
-            </div>
-        </div>
-    
-        <div class="field is-grouped">
-            <div class="control">
-                <button class="button is-primary is-small">Save</button>
-            </div>
-        </div>
-    </form>
 
 {% endblock %}

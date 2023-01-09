@@ -18,12 +18,13 @@ class Database:
         participant = self.participants.get(participant_key)
         if participant is None:
             return None
-        participant_ = Participant(participant.participant_name, email=participant.email)
+        participant_ = Participant(participant.participant, email=participant.email)
+        return participant_
     
     def get_participants(self):
         participants = []
         for participant_key, participant in self.participants.items():
-            participant_ = Participant(participant.participant_name, email=participant.email)
+            participant_ = Participant(participant.participant, email=participant.email)
             participants.append((participant_key, participant_))
         return participants
 
