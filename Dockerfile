@@ -19,10 +19,10 @@ RUN apt-get -y install git
 # ENV FLASK_APP flaskr
 # ENV HOST 0.0.0.0
 
-ENV FLASK_APP=app.py
-
 # Install production dependencies.
 RUN pip install --no-cache-dir -r requirements.txt
+
+ENV FLASK_APP=app.py
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
