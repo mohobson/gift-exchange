@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Info{% endblock %}
+{% block title %}Participants{% endblock %}
 {% block content %}
     <h1 class="title">Participants</h1>
     {% if participants %}
@@ -16,5 +16,28 @@
         {% endfor %}
     </table>
     {% endif %}
+
+    <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-primary is-small">Draw!</button>
+        </div>
+    </div>
+
+
+    <form action="">
+        <div class="field">
+            <div class="control">
+              <input type="submit" value="button!"/>
+            </div>
+        </div>
+        
+    </form>
+
+
+    <div class="assignments">
+        {% if assignments %} 
+            {{ assignments }}
+        {% endif %}
+    </div>
 
 {% endblock %}

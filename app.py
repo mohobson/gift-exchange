@@ -23,6 +23,10 @@ def create_app():
     app.add_url_rule("/new-participant", view_func=views.participant_add_page, methods=["GET", "POST"])
 
     db = Database()
+    db.add_participant(Participant("mo", email="mo@aol.com"))
+    db.add_participant(Participant("number2", email="number2@aol.com"))
+    db.add_participant(Participant("number3", email="number3@aol.com"))
+
     app.config["db"] = db
 
     @app.route('/')

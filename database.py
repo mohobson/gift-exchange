@@ -3,6 +3,8 @@ from participants import Participant
 class Database:
     def __init__(self):
         self.participants = {}
+        self.assignments = {}
+        self._last_assignment_key = 0
         self._last_participant_key = 0
     
     def add_participant(self, participant):
@@ -27,5 +29,19 @@ class Database:
             participant_ = Participant(participant.participant, email=participant.email)
             participants.append((participant_key, participant_))
         return participants
+
+    def add_assignment(self, name1, name2):
+        self._last_assignment_key += 1
+        self.assignments[self._last_assignment_key] = [name1, name2]
+        return self._last_assignment_key
+
+    def get_assignments(self):
+        assignments = []
+        for assignment_key, assignment in self.assignments.items():
+            assignments.append(assignment)
+        return assignments
+
+
+
 
     

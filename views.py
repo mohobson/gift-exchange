@@ -2,6 +2,7 @@ from datetime import datetime
 
 from flask import abort, current_app, render_template, request, redirect, url_for
 from participants import Participant
+from drawing import drawing
 
 def home_page():
     # today = datetime.today()
@@ -13,7 +14,8 @@ def home_page():
 def participants_page():
     db = current_app.config["db"]
     participants = db.get_participants()
-    return render_template("participants.html", participants=sorted(participants))
+    assignments = drawing(participants)
+    return render_template("participants.html", participants=sorted(participants), assignments=assignments)
 
 def participant_page(participant_key):
     db = current_app.config["db"]
