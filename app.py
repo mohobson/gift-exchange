@@ -23,7 +23,7 @@ def create_app():
     app.add_url_rule("/new-participant", view_func=views.participant_add_page, methods=["GET", "POST"])
 
     app.add_url_rule("/couples", view_func=views.couples_page)
-    app.add_url_rule("/couples/<int:couple_key>", view_func=views.couple_page)
+    app.add_url_rule("/couple/<int:couple_key>", view_func=views.couple_page)
     app.add_url_rule("/new-couple", view_func=views.couple_add_page, methods=["GET", "POST"])
 
 
@@ -33,8 +33,10 @@ def create_app():
     db.add_participant(Participant("mo", email="mo@aol.com"))
     db.add_participant(Participant("number2", email="number2@aol.com"))
     db.add_participant(Participant("number3", email="number3@aol.com"))
+    db.add_participant(Participant("number4", email="number4@aol.com"))
 
-    db.add_couple(Couple("mo", "number 2"))
+
+    db.add_couple(Couple("mo", "number2"))
 
     app.config["db"] = db
     

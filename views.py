@@ -63,3 +63,7 @@ def couple_add_page():
         db = current_app.config["db"]
         couple_key = db.add_couple(couple)
         return redirect(url_for("couple_page", couple_key=couple_key))
+    
+
+#######################
+

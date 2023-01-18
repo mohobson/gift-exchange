@@ -5,6 +5,8 @@ import os
 from database import Database
 from flask import current_app
 
+from assignments import Assignment
+
 
 def drawing(particip, couples):
 	
@@ -13,7 +15,7 @@ def drawing(particip, couples):
 	for participant_key, participant in particip:
 		participants[participant.participant] = participant.email
 
-	print(participants)
+	# print(participants)
 	
 	# this will keep trying until the conditions are met (break).
 	while True:
@@ -31,34 +33,38 @@ def drawing(particip, couples):
 
 		##################################### COUPLES #####################################
 
-		couples_list = {}
+		couples_dict = {}
 		#convert values to str
 		for couple_key, couple in couples:
-			couples_list[couple.partner_one] = couple.partner_two
+			couples_dict[couple.partner_one] = couple.partner_two
 
-		print(couples_list)
+		# print(couples_dict)
 
 		# create a list that will be full of pass/fail. want it to be all passes. if not, infinite loop will continue (no break)
-		token = []
+		list_of_pass_or_fail = []
 
-		# test if the pairs work. fill out token list with pass/fail
-		for partner1, partner2 in couples.items():
-			for key, value in assignment_dict.items():
-				if str(partner1) == str(key) and str(partner2[0]) == str(value) or str(partner2[0]) == str(key) and str(partner1) == str(value):
+		# test if the pairs work. fill out list_of_pass_or_fail list with pass/fail
+		for partner1, partner2 in couples_dict.items():
+			for name1, name2 in assignment_dict.items():
+				print(partner1, name1)
+				print(partner2, name2)
+				if str(partner1) == str(name1) and str(partner2) == str(name2) or str(partner2) == str(name1) and str(partner1) == str(name2):
 					# print('Problem! ' + str(partner1) + ' and ' + str(partner2[0]) + ' cannot match!')
-					token.append('fail')
+					list_of_pass_or_fail.append('fail')
 				else:
-					token.append('pass')
+					list_of_pass_or_fail.append('pass')
 
-		# create a passing list with the same length as the token list
+		# create a passing list with the same length as the list_of_pass_or_fail list
 		passing_list = []
 		count = 0
-		while count < len(token):
+		while count < len(list_of_pass_or_fail):
 			passing_list.append('pass')
 			count += 1
 
-		# compare perfect list to the token list. if it matches, break the loop
-		if token == passing_list:
+		print(list_of_pass_or_fail)
+
+		# compare perfect list to the list_of_pass_or_fail list. if it matches, break the loop
+		if list_of_pass_or_fail == passing_list:
 			break
 
 
@@ -85,7 +91,10 @@ def drawing(particip, couples):
 	db = current_app.config["db"]
 
 	for name1, name2 in assignment_dict.items():
-		db.add_assignment(name1, name2)
+		print(name1)
+		print(type(name1))
+		db.add_assignment(Assignment(str(name1), str(name2)))
+
 
 	print(db.get_assignments())
 	return db.get_assignments()

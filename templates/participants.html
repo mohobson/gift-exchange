@@ -45,7 +45,17 @@
     <div class="assignments">
         <p>Assignments are shown for testing purposes only. Remove for v1</p>
         {% if assignments %}
-            {{ assignments }}
+        <table class="table is-striped is-fullwidth">
+            {% for assignment_key, assignment in assignments %}
+            <tr>
+                <td>
+                    {{ assignment.name1 }}
+                    {{ assignment.name2 }}
+                </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
         {% endif %}
     </div>
 

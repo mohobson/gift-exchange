@@ -1,5 +1,6 @@
 from participants import Participant
 from couples import Couple
+from assignments import Assignment
 
 class Database:
     def __init__(self):
@@ -34,11 +35,11 @@ class Database:
             participants.append((participant_key, participant_))
         return participants
 
-    ############## WORKING ON COUPLES #####################
+    ############## COUPLES #####################
 
     def add_couple(self, couple):
             self._last_couple_key += 1
-            self.participants[self._last_participant_key] = couple
+            self.couples[self._last_couple_key] = couple
             return self._last_couple_key
     
     def delete_couple(self, couple_key):
@@ -61,18 +62,29 @@ class Database:
 
 
 
-    ############## WORKING ON COUPLES #####################
+    ############## COUPLES #####################
 
+    def add_assignment(self, assignment):
+            self._last_assignment_key += 1
+            self.assignments[self._last_assignment_key] = assignment
+            return self._last_assignment_key
+    
+    def delete_assignment(self, assignment_key):
+        if assignment_key in self.assignments:
+            del self.assignents[assignment_key]
 
-    def add_assignment(self, name1, name2):
-        self._last_assignment_key += 1
-        self.assignments[self._last_assignment_key] = [name1, name2]
-        return self._last_assignment_key
+    def get_assignment(self, assignment_key):
+        assignment = self.assignments.get(assignment_key)
+        if assignment is None:
+            return None
+        assignment_ = Assignment(assignment.name1, assignment.name2)
+        return assignment_
 
     def get_assignments(self):
         assignments = []
         for assignment_key, assignment in self.assignments.items():
-            assignments.append(assignment)
+            assignment_ = Assignment(assignment.name1, assignment.name2)
+            assignments.append((assignment_key, assignment_))
         return assignments
 
 
