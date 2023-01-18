@@ -17,12 +17,20 @@
     </table>
     {% endif %}
 
-    <div class="field is-grouped">
-        <div class="control">
-          <button class="button is-primary is-small">Draw!</button>
-        </div>
-    </div>
-
+    {% if couples %}
+    <table class="table is-striped is-fullwidth">
+        {% for couple_key, couple in couples %}
+        <tr>
+            <td>
+            <a href="{{ url_for('couple_page', couple_key=couple_key) }}">
+                {{ couple.partner_one }}
+                {{ couple.partner_two }}
+            </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
 
     <form action="">
         <div class="field">
@@ -35,7 +43,8 @@
 
 
     <div class="assignments">
-        {% if assignments %} 
+        <p>Assignments are shown for testing purposes only. Remove for v1</p>
+        {% if assignments %}
             {{ assignments }}
         {% endif %}
     </div>

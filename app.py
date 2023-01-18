@@ -4,6 +4,7 @@ import datetime
 import views
 from database import Database
 from participants import Participant
+from couples import Couple
 
 messages = [{'name': 'name one',
              'email': 'email one'},
@@ -11,31 +12,31 @@ messages = [{'name': 'name one',
              'email': 'email two'}
             ]
 
-# currently on 3
-# https://web.itu.edu.tr/uyar/fad/data-model.html
 def create_app():
     app = Flask(__name__)
     app.config.from_object("settings")
 
     app.add_url_rule("/", view_func=views.home_page)
+
     app.add_url_rule("/participants", view_func=views.participants_page)
     app.add_url_rule("/participants/<int:participant_key>", view_func=views.participant_page)
     app.add_url_rule("/new-participant", view_func=views.participant_add_page, methods=["GET", "POST"])
 
+    app.add_url_rule("/couples", view_func=views.couples_page)
+    app.add_url_rule("/couples/<int:couple_key>", view_func=views.couple_page)
+    app.add_url_rule("/new-couple", view_func=views.couple_add_page, methods=["GET", "POST"])
+
+
     db = Database()
+
+    # add some temporary participants and one couple for testing purposes
     db.add_participant(Participant("mo", email="mo@aol.com"))
     db.add_participant(Participant("number2", email="number2@aol.com"))
     db.add_participant(Participant("number3", email="number3@aol.com"))
 
-    app.config["db"] = db
+    db.add_couple(Couple("mo", "number 2"))
 
-    @app.route('/')
-    def index():
-        # today = datetime.datetime()
-        # day_name = today.strftime("%A")
-        day_name='dayname'
-        print(day_name)
-        return render_template('index.html', day=day_name, messages=messages)
+    app.config["db"] = db
     
     return app
 
@@ -45,5 +46,6 @@ app = create_app()
 # port = app.config.get("PORT", 5000)
 # app.run(host='0.0.0.0', port=port, debug=True)
 
-
-#https://www.digitalocean.com/community/tutorials/how-to-use-web-forms-in-a-flask-application
+# helpful links:
+# https://web.itu.edu.tr/uyar/fad/data-model.html
+# https://www.digitalocean.com/community/tutorials/how-to-use-web-forms-in-a-flask-application

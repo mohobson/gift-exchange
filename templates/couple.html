@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Couple{% endblock %}
+{% block content %}
+    <h1 class="title">Couple</h1>
+
+    <table class="table">
+      <tr>
+        <th>Partner One:</th>
+        <td>{{ couple.partner_one }}</td>
+      </tr>
+      <tr>
+        <th>Partner Two:</th>
+        <td>{{ couple.partner_two }}</td>
+      </tr>
+    </table>
+
+{% endblock %}

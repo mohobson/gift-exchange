@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Edit couples{% endblock %}
+{% block content %}
+    <h1 class="title">Edit couples</h1>
+
+    <form action="" method="post" name="couples_edit">
+      <div class="field">
+        <label for="partner one" class="label">Partner One</label>
+        <div class="control">
+          <input type="text" name="partner one" class="input" required="required"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="partner two" class="label">Partner Two</label>
+        <div class="control">
+          <input type="text" name="partner two" class="input" required="required"/>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-primary is-small">Save</button>
+        </div>
+      </div>
+    </form>
+
+    
+{% endblock %}
