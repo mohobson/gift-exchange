@@ -46,8 +46,8 @@ def drawing(particip, couples):
 		# test if the pairs work. fill out list_of_pass_or_fail list with pass/fail
 		for partner1, partner2 in couples_dict.items():
 			for name1, name2 in assignment_dict.items():
-				print(partner1, name1)
-				print(partner2, name2)
+				# print(partner1, name1)
+				# print(partner2, name2)
 				if str(partner1) == str(name1) and str(partner2) == str(name2) or str(partner2) == str(name1) and str(partner1) == str(name2):
 					# print('Problem! ' + str(partner1) + ' and ' + str(partner2[0]) + ' cannot match!')
 					list_of_pass_or_fail.append('fail')
@@ -61,7 +61,7 @@ def drawing(particip, couples):
 			passing_list.append('pass')
 			count += 1
 
-		print(list_of_pass_or_fail)
+		# print(list_of_pass_or_fail)
 
 		# compare perfect list to the list_of_pass_or_fail list. if it matches, break the loop
 		if list_of_pass_or_fail == passing_list:
@@ -87,16 +87,16 @@ def drawing(particip, couples):
 		# grid.sendgrid_email(addr, fromaddr, subject, name)
 
 
-	print(assignment_dict)
+	# print(assignment_dict)
 	db = current_app.config["db"]
 
 	for name1, name2 in assignment_dict.items():
-		print(name1)
-		print(type(name1))
+		# print(name1)
+		# print(type(name1))
 		db.add_assignment(Assignment(str(name1), str(name2)))
 
 
-	print(db.get_assignments())
+	# print(db.get_assignments())
 	return db.get_assignments()
 
 

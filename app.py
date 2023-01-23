@@ -18,12 +18,14 @@ def create_app():
 
     app.add_url_rule("/", view_func=views.home_page)
 
-    app.add_url_rule("/participants", view_func=views.participants_page)
+    app.add_url_rule("/participants", view_func=views.participants_page, methods=["GET", "POST"])
     app.add_url_rule("/participants/<int:participant_key>", view_func=views.participant_page)
+    app.add_url_rule("/participants/<int:participant_key>/edit", view_func=views.participant_edit_page, methods=["GET", "POST"])
     app.add_url_rule("/new-participant", view_func=views.participant_add_page, methods=["GET", "POST"])
 
-    app.add_url_rule("/couples", view_func=views.couples_page)
-    app.add_url_rule("/couple/<int:couple_key>", view_func=views.couple_page)
+    app.add_url_rule("/couples", view_func=views.couples_page, methods=["GET", "POST"])
+    app.add_url_rule("/couples/<int:couple_key>", view_func=views.couple_page)
+    app.add_url_rule("/couples/<int:couple_key>/edit", view_func=views.couple_edit_page, methods=["GET", "POST"])
     app.add_url_rule("/new-couple", view_func=views.couple_add_page, methods=["GET", "POST"])
 
 

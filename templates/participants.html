@@ -3,37 +3,59 @@
 {% block content %}
     <h1 class="title">Participants</h1>
     {% if participants %}
-    <table class="table is-striped is-fullwidth">
-        {% for participant_key, participant in participants %}
-        <tr>
-            <td>
-            <a href="{{ url_for('participant_page', participant_key=participant_key) }}">
-                {{ participant.participant }}
-                {% if participant.email %} ({{ participant.email }}) {% endif %}
-            </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <form action="" method="post" name="participant_list">
+        <table class="table is-striped is-fullwidth">
+            {% for participant_key, participant in participants %}
+            <tr>
+                <td>
+                    <label class="checkbox">
+                        <input type="checkbox" name="participantKeys" value="{{ participant_key }}"/>
+                    </label>
+                    <a href="{{ url_for('participant_page', participant_key=participant_key) }}">
+                        {{ participant.participant }}
+                        {% if participant.email %} ({{ participant.email }}) {% endif %}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-danger is-small">Delete</button>
+            </div>
+        </div>
+    </form>
     {% endif %}
 
     {% if couples %}
-    <table class="table is-striped is-fullwidth">
-        {% for couple_key, couple in couples %}
-        <tr>
-            <td>
-            <a href="{{ url_for('couple_page', couple_key=couple_key) }}">
-                {{ couple.partner_one }}
-                {{ couple.partner_two }}
-            </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <form action="" method="post" name="couple_list">
+        <table class="table is-striped is-fullwidth">
+            {% for couple_key, couple in couples %}
+            <tr>
+                <td>
+                    <label class="checkbox">
+                        <input type="checkbox" name="coupleKeys" value="{{ couple_key }}"/>
+                    </label>
+                    <a href="{{ url_for('couple_page', couple_key=couple_key) }}">
+                        {{ couple.partner_one }}
+                        {{ couple.partner_two }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-danger is-small">Delete</button>
+            </div>
+        </div>
+    </form>
     {% endif %}
 
-    <form action="">
-        <div class="field">
+    
+        <div class="field is-grouped">
             <div class="control">
               <input type="submit" value="button!"/>
             </div>

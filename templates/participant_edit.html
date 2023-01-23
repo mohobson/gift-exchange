@@ -5,16 +5,16 @@
 
     <form action="" method="post" name="participant_edit">
       <div class="field">
-        <label for="participant name" class="label">Participant Name</label>
+        <label for="participantName" class="label">Participant Name</label>
         <div class="control">
-          <input type="text" name="participant name" class="input" required="required"/>
+          <input type="text" name="participantName" class="input" required="required" value="{{ values['participantName'] }}"/>
         </div>
       </div>
 
       <div class="field">
         <label for="email" class="label">Email</label>
         <div class="control">
-          <input type="email" name="email" class="input"/>
+          <input type="email" name="email" class="input" value="{{ values['email'] }}"/>
         </div>
       </div>
 

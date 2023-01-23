@@ -16,6 +16,9 @@ class Database:
         self._last_participant_key += 1
         self.participants[self._last_participant_key] = participant
         return self._last_participant_key
+
+    def update_participant(self, participant_key, participant):
+        self.participants[participant_key] = participant
     
     def delete_participant(self, participant_key):
         if participant_key in self.participants:
@@ -42,6 +45,9 @@ class Database:
             self.couples[self._last_couple_key] = couple
             return self._last_couple_key
     
+    def update_couple(self, couple_key, couple):
+        self.couples[couple_key] = couple
+
     def delete_couple(self, couple_key):
         if couple_key in self.couples:
             del self.couples[couple_key]
