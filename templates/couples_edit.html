@@ -4,18 +4,33 @@
     <h1 class="title">Edit couples</h1>
 
     <form action="" method="post" name="couples_edit">
+      {{ form.csrf_token }}
+
       <div class="field">
-        <label for="partner one" class="label">Partner One</label>
+        <label for="partner_one" class="label">Partner One</label>
         <div class="control">
-          <input type="text" name="partner one" class="input" required="required" value="{{ values['partner_one'] }}"/>
+          {{ form.partner_one(required=True, autofocus=True, class='input') }}
         </div>
+
+        {% for error in form.partner_one.errors %}
+        <p class="help has-background-warning">
+          {{ error }}
+        </p>
+        {% endfor %}
       </div>
 
       <div class="field">
-        <label for="partner two" class="label">Partner Two</label>
+        <label for="partner_two" class="label">Partner Two</label>
         <div class="control">
-          <input type="text" name="partner two" class="input" required="required" value="{{ values['partner_two'] }}"/>
+          {{ form.partner_two(class='input') }}
         </div>
+
+        {% for error in form.partner_two.errors %}
+        <p class="help has-background-warning">
+          {{ error }}
+        </p>
+        {% endfor %}
+
       </div>
 
       <div class="field is-grouped">

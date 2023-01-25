@@ -4,18 +4,33 @@
     <h1 class="title">Edit participant</h1>
 
     <form action="" method="post" name="participant_edit">
+      {{ form.csrf_token }}
+
       <div class="field">
         <label for="participantName" class="label">Participant Name</label>
         <div class="control">
-          <input type="text" name="participantName" class="input" required="required" value="{{ values['participantName'] }}"/>
+          {{ form.participant(required=True, autofocus=True, class='input') }}
         </div>
+
+        {% for error in form.participant.errors %}
+        <p class="help has-background-warning">
+          {{ error }}
+        </p>
+        {% endfor %}
       </div>
 
       <div class="field">
         <label for="email" class="label">Email</label>
         <div class="control">
-          <input type="email" name="email" class="input" value="{{ values['email'] }}"/>
+          {{ form.email(class='input') }}
         </div>
+
+        {% for error in form.email.errors %}
+        <p class="help has-background-warning">
+          {{ error }}
+        </p>
+        {% endfor %}
+
       </div>
 
       <div class="field is-grouped">

@@ -4,6 +4,8 @@ from flask import abort, current_app, render_template, request, redirect, url_fo
 from participants import Participant
 from couples import Couple
 from drawing import drawing
+from forms import ParticipantEditForm, CoupleEditForm
+
 
 def home_page():
     today = datetime.today()
@@ -36,33 +38,31 @@ def participant_page(participant_key):
     return render_template("participant.html", participant=participant)
 
 def participant_add_page():
-    if request.method == "GET":
-        values = {"participantName": "", "email": ""}
-        return render_template("participant_edit.html", values=values)
-        
-    else:
-        form_participant = request.form["participantName"]
-        form_email = request.form["email"]
-        participant = Participant(form_participant, email=form_email if form_email else None)
+    form = ParticipantEditForm()
+    if form.validate_on_submit():
+        participant_name = form.data["participant"]
+        email = form.data["email"]
+        participant = Participant(participant_name, email=email)
         db = current_app.config["db"]
         participant_key = db.add_participant(participant)
         return redirect(url_for("participant_page", participant_key=participant_key))
+    return render_template("participant_edit.html", form=form)
+
 
 def participant_edit_page(participant_key):
-    if request.method == "GET":
-        db = current_app.config["db"]
-        participant = db.get_participant(participant_key)
-        if participant is None:
-            abort(404)
-        values = {"participantName": participant.participant, "email": participant.email}
-        return render_template("participant_edit.html", values=values)
-    else:
-        form_participant = request.form["participantName"]
-        form_email = request.form["email"]
-        participant = Participant(form_participant, email=form_email if form_email else None)
-        db = current_app.config["db"]
+    db = current_app.config["db"]
+    participant = db.get_participant(participant_key)
+    form = ParticipantEditForm()
+    if form.validate_on_submit():
+        participant_name = form.data["participant"]
+        email = form.data["email"]
+        participant = Participant(participant_name, email=email)
         db.update_participant(participant_key, participant)
         return redirect(url_for("participant_page", participant_key=participant_key))
+    form.participant.data = participant.participant
+    form.email.data = participant.email if participant.email else ""
+    return render_template("participant_edit.html", form=form)
+
 
 ##############
 
@@ -85,32 +85,65 @@ def couple_page(couple_key):
     return render_template("couple.html", couple=couple)
 
 def couple_add_page():
-    if request.method == "GET":
-        values = {"partner_one": "", "partner_two": ""}
-        return render_template("couples_edit.html", values=values)
-        
-    else:
-        form_partner_one = request.form["partner one"]
-        form_partner_two = request.form["partner two"]
-        couple = Couple(form_partner_one, form_partner_two)
+    form = CoupleEditForm()
+    if form.validate_on_submit():
+        partner_one = form.data["partner_one"]
+        partner_two = form.data["partner_two"]
+        couple = Couple(partner_one, partner_two=partner_two)
         db = current_app.config["db"]
         couple_key = db.add_couple(couple)
         return redirect(url_for("couple_page", couple_key=couple_key))
+    return render_template("couples_edit.html", form=form)
     
 def couple_edit_page(couple_key):
-    if request.method == "GET":
-        db = current_app.config["db"]
-        couple = db.get_couple(couple_key)
-        if couple is None:
-            abort(404)
-        values = {"partner_one": couple.partner_one, "partner_two": couple.partner_two}
-        return render_template("couples_edit.html", values=values)
-    else:
-        form_partner_one = request.form["partner one"]
-        form_partner_two = request.form["partner two"]
-        couple = Couple(form_partner_one, partner_two=form_partner_two if form_partner_two else None)
-        db = current_app.config["db"]
+    db = current_app.config["db"]
+    couple = db.get_couple(couple_key)
+    form = CoupleEditForm()
+    if form.validate_on_submit():
+        partner_one = form.data["partner_one"]
+        partner_two = form.data["partner_two"]
+        couple = Couple(partner_one, partner_two=partner_two)
         db.update_couple(couple_key, couple)
         return redirect(url_for("couple_page", couple_key=couple_key))
+    form.partner_one.data = couple.partner_one
+    form.partner_two.data = couple.partner_two if couple.partner_two else ""
+    return render_template("couples_edit.html", form=form)
 #######################
 
+########### VALIDATION ###########
+
+def validate_participant_form(form):
+    form.data = {}
+    form.errors = {}
+
+    form_participant = form.get("participantName", "").strip()
+    if len(form_participant) == 0:
+        form.errors["participantName"] = "Field cannot be blank."
+    else:
+        form.data["participantName"] = form_participant
+    
+    form_email = form.get("email")
+    if not form_email:
+        form.data["email"] = None
+    else:
+        form.data["email"] = form_email
+    
+    return len(form.errors) == 0
+
+def validate_couple_form(form):
+    form.data = {}
+    form.errors = {}
+
+    form_partner_one = form.get("partner_one", "").strip()
+    if len(form_partner_one) == 0:
+        form.errors["partner_one"] = "Field cannot be blank."
+    else:
+        form.data["partner_one"] = form_partner_one
+    
+    form_partner_two = form.get("partner_two")
+    if len(form_partner_two) == 0:
+        form.errors["partner_two"] = "Field cannot be blank."
+    else:
+        form.data["partner_two"] = form_partner_two
+    
+    return len(form.errors) == 0
