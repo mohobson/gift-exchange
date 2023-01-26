@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from flask import abort, current_app, render_template, request, redirect, url_for
 from participants import Participant
@@ -8,9 +8,16 @@ from forms import ParticipantEditForm, CoupleEditForm
 
 
 def home_page():
-    today = datetime.today()
-    day_name = today.strftime("%A")
-    return render_template("home.html", day=day_name)
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    current_day = datetime.now().day
+    
+    today = date(current_year, current_month, current_day)
+    christmas = date(2023, 12, 25)
+    days_until_christmas = christmas - today
+    #day_name = today.strftime("%A")
+
+    return render_template("home.html", days=days_until_christmas.days)
 
 
 def participants_page():

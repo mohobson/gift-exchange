@@ -1,11 +1,18 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #202124;
+    color: #bdc1c6;
+}
+
 .message {
     padding: 10px;
     margin: 5px;
-    background-color: #f3f3f3
+    background-color: #87CEFA;
 }
 
 nav a {
-    color: #d64161;
+    color: #FFFFFF;
     font-size: 3em;
     margin-left: 50px;
     text-decoration: none;
