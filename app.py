@@ -32,13 +32,13 @@ def create_app():
     db = Database()
 
     # add some temporary participants and one couple for testing purposes
-    db.add_participant(Participant("mo", email="mo@aol.com"))
-    db.add_participant(Participant("number2", email="number2@aol.com"))
-    db.add_participant(Participant("number3", email="number3@aol.com"))
-    db.add_participant(Participant("number4", email="number4@aol.com"))
+    db.add_participant(Participant("Participant 1", email="p1@aol.com"))
+    db.add_participant(Participant("Participant 2", email="p2@aol.com"))
+    db.add_participant(Participant("Participant 3", email="p3@aol.com"))
+    db.add_participant(Participant("Participant 4", email="p4@aol.com"))
 
 
-    db.add_couple(Couple("mo", "number2"))
+    db.add_couple(Couple("Participant 1", "Participant 2"))
 
     app.config["db"] = db
     

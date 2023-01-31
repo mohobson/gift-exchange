@@ -6,19 +6,27 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="{{ url_for('home_page') }}">Home</a>
-            <a href="{{ url_for('participants_page') }}">Participants</a>
-            <a href="{{ url_for('couples_page') }}">Couples</a>
-            <a href="{{ url_for('participant_add_page') }}">Add Participant</a>
-            <a href="{{ url_for('couple_add_page') }}">Add Couple</a>
-        </nav>
-    </header>
-    <hr>
+    <div class="header">
+        HEADER
+    </div>
     <div class="content">
-        {% block content %}{% endblock %}
-        
+        <div class="sidebar">
+            <header>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('home_page') }}">Home</a></li>
+                        <li><a href="{{ url_for('participants_page') }}">Participants</a></li>
+                        <li><a href="{{ url_for('couples_page') }}">Couples</a></li>
+                        <li><a href="{{ url_for('participant_add_page') }}">Add Participant</a></li>
+                        <li><a href="{{ url_for('couple_add_page') }}">Add Couple</a></li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+        <div class="block-content">
+            {% block content %}{% endblock %}
+            
+        </div>
     </div>
 </body>
 </html>
