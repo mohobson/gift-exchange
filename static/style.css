@@ -1,17 +1,13 @@
 body {
     display: flex;
     flex-direction: column;
+    font-family: sans-serif;
     background-color: #202124;
     color: #bdc1c6;
     margin: 16px;
     min-height: 100vh;
     gap: 16px;
 }
-
-/* .view {
-    display: flex;
-
-} */
 
 .header {
     height: 72px;
@@ -23,7 +19,7 @@ body {
     font-weight: 900;
     border: 1px solid black;
     box-shadow: 2px 4px 16px black;
-    border-radius: 16px;
+    border-radius: 8px;
 }
 
 .content {
@@ -33,7 +29,7 @@ body {
 }
 
 .sidebar {
-    width: 300px;
+    width: 40vh;
     flex-shrink: 0;
     padding: 16px;
     border: 1px solid black;
