@@ -29,7 +29,9 @@
 }
 
 .sidebar {
-    width: 40vh;
+    width: 20%;
+    max-width: 20%;
+    min-width: 20%;
     flex-shrink: 0;
     padding: 16px;
     border: 1px solid black;
