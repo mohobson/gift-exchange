@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 #body {
     display: flex;
     flex-direction: column;
@@ -5,7 +9,8 @@
     background-color: #202124;
     color: #bdc1c6;
     padding: 16px;
-    min-height: 100vh;
+    height: 100%;
+    width: 100%;
     gap: 16px;
 }
 
@@ -29,16 +34,44 @@
 }
 
 .sidebar {
+    display: flex;
+    flex-direction: column;
     width: 20%;
-    max-width: 20%;
-    min-width: 20%;
-    flex-shrink: 0;
+    overflow: hidden;
     padding: 16px;
     border: 1px solid black;
     box-shadow: 2px 4px 16px black;
     border-radius: 16px;
     /* border: 1px solid red; */
 }
+
+.sidebar-content {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.menu-button {
+    display: none;
+}
+
+@media (max-width:768px) {
+    .sidebar {
+        width: 30%;
+    }
+}
+
+@media (max-width:576px) {
+    .sidebar {
+      width: 100%;
+    }
+    .sidebar-content {
+      display: none;
+    }
+    .menu-button {
+      display: block;
+    }
+  }
 
 ul {
     list-style-type: none;
