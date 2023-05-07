@@ -10,34 +10,32 @@
 
 </head>
 <body>
-    <div id="snowflakesContainer">
-        <div id="body">
-            <div class="header">
-                GIFT EXCHANGE
+    <div id="body">
+        <div class="header">
+            GIFT EXCHANGE
+        </div>
+        <div class="content">
+            <div class="sidebar">
+                <div class="sidebar-content">
+                    <header>
+                        <nav>
+                            <ul>
+                                <li><a href="{{ url_for('home_page') }}">Home</a></li>
+                                <li><a href="{{ url_for('participants_page') }}">Participants</a></li>
+                                <li><a href="{{ url_for('couples_page') }}">Couples</a></li>
+                                <li><a href="{{ url_for('participant_add_page') }}">Add Participant</a></li>
+                                <li><a href="{{ url_for('couple_add_page') }}">Add Couple</a></li>
+                            </ul>
+                        </nav>
+                    </header>
+                </div>
+                <button class="menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-            <div class="content">
-                <div class="sidebar">
-                    <div class="sidebar-content">
-                        <header>
-                            <nav>
-                                <ul>
-                                    <li><a href="{{ url_for('home_page') }}">Home</a></li>
-                                    <li><a href="{{ url_for('participants_page') }}">Participants</a></li>
-                                    <li><a href="{{ url_for('couples_page') }}">Couples</a></li>
-                                    <li><a href="{{ url_for('participant_add_page') }}">Add Participant</a></li>
-                                    <li><a href="{{ url_for('couple_add_page') }}">Add Couple</a></li>
-                                </ul>
-                            </nav>
-                        </header>
-                    </div>
-                    <button class="menu-button">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-                <div class="block-content">
-                    {% block content %}{% endblock %}
-                    
-                </div>
+            <div class="block-content">
+                {% block content %}{% endblock %}
+                
             </div>
         </div>
     </div>
