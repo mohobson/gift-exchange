@@ -117,38 +117,4 @@ a {
     text-decoration: none;
 }
 
-#snowflakesContainer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-.snowflake {
-    position: absolute;
-    top: -100px;
-    left: -50px;
-    width: 50px;
-    height: 50px;
-    background-image: url(snowflake.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    animation: snowflake 10s linear infinite;
-    transform: translate3d(0, 0, 0);
-    transform-origin: 50% 50%;
-}
-
-@keyframes snowflake {
-    0% {
-        top: 0;
-        transform: rotate(0deg) translateY(0%) translateX(0%);
-    }
-    100% {
-        top: 90%;
-        transform: rotate(360deg) translateY(100%) translateX(0%);
-    }
-}
 
