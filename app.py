@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request
 
+import os
 import datetime
 import views
-from database import Database
+# from database import Database
 from participants import Participant
 from couples import Couple
 
@@ -13,8 +14,29 @@ messages = [{'name': 'name one',
             ]
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
     app.config.from_object("settings")
+
+    # home_dir = os.path.expanduser("~")
+    # print(home_dir)
+    print(app.instance_path)
+    app.config.from_mapping(
+        DATABASE=os.path.join(app.instance_path, 'group.sql')
+    )
+
+    # ensure the instance folder exists
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+    
+    import database
+    database.init_app(app)
+
+    # db = Database(os.path.join(home_dir, "group.sql"))
+    # app.config["db"] = db
+    # from . import auth
+    # app.register_blueprint(auth.bp)
 
     app.add_url_rule("/", view_func=views.home_page)
 
@@ -28,19 +50,14 @@ def create_app():
     app.add_url_rule("/couples/<int:couple_key>/edit", view_func=views.couple_edit_page, methods=["GET", "POST"])
     app.add_url_rule("/new-couple", view_func=views.couple_add_page, methods=["GET", "POST"])
 
-
-    db = Database()
-
     # add some temporary participants and one couple for testing purposes
-    db.add_participant(Participant("Participant 1", email="p1@aol.com"))
-    db.add_participant(Participant("Participant 2", email="p2@aol.com"))
-    db.add_participant(Participant("Participant 3", email="p3@aol.com"))
-    db.add_participant(Participant("Participant 4", email="p4@aol.com"))
+    # db.add_participant(Participant("Participant 1", email="p1@aol.com"))
+    # db.add_participant(Participant("Participant 2", email="p2@aol.com"))
+    # db.add_participant(Participant("Participant 3", email="p3@aol.com"))
+    # db.add_participant(Participant("Participant 4", email="p4@aol.com"))
 
 
-    db.add_couple(Couple("Participant 1", "Participant 2"))
-
-    app.config["db"] = db
+    # db.add_couple(Couple("Participant 1", "Participant 2"))
     
     return app
 

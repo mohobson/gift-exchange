@@ -1,69 +1,139 @@
+import sqlite3
+
+import click
+from flask import current_app, g
+from flask.cli import with_appcontext
+
 from participants import Participant
 from couples import Couple
 from assignments import Assignment
 
-class Database:
-    def __init__(self):
-        self.participants = {}
-        self.couples = {}
-        self.assignments = {}
+def get_db():
+    if 'db' not in g:
+        g.db = sqlite3.connect(
+            current_app.config['DATABASE'],
+            detect_types=sqlite3.PARSE_DECLTYPES
+        )
+        g.db.row_factory = sqlite3.Row
 
-        self._last_participant_key = 0
-        self._last_couple_key = 0
-        self._last_assignment_key = 0
+    return g.db
+
+
+def close_db(e=None):
+    db = g.pop('db', None)
+
+    if db is not None:
+        db.close()
+
+
+def init_db():
+    db = get_db()
+
+    with current_app.open_resource('group.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+
+
+@click.command('init-db')
+@with_appcontext
+def init_db_command():
+    """Clear the existing data and create new tables."""
+    init_db()
+    click.echo('Initialized the database.')
+
+
+def init_app(app):
+    app.teardown_appcontext(close_db)
+    app.cli.add_command(init_db_command)
+
+class Database:
+    def __init__(self, dbfile):
+        self.dbfile = dbfile
 
     def add_participant(self, participant):
-        self._last_participant_key += 1
-        self.participants[self._last_participant_key] = participant
-        return self._last_participant_key
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO PARTICIPANT (PARTICIPANT, EMAIL) VALUES (?, ?)"
+            cursor.execute(query, (participant.participant, participant.email))
+            connection.commit()
+            participant_key = cursor.lastrowid
+        return participant_key
+
 
     def update_participant(self, participant_key, participant):
-        self.participants[participant_key] = participant
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE PARTICIPANT SET PARTICIPANT = ?, EMAIL = ? WHERE (ID = ?)"
+            cursor.execute(query, (participant.participant, participant.email, participant_key))
+            connection.commit()
     
     def delete_participant(self, participant_key):
-        if participant_key in self.participants:
-            del self.participants[participant_key]
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM PARTICIPANT WHERE (ID = ?)"
+            cursor.execute(query, (participant_key,))
+            connection.commit()
     
     def get_participant(self, participant_key):
-        participant = self.participants.get(participant_key)
-        if participant is None:
-            return None
-        participant_ = Participant(participant.participant, email=participant.email)
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT PARTICIPANT, EMAIL FROM PARTICIPANT WHERE (ID = ?)"
+            cursor.execute(query, (participant_key,))
+            participant, email = cursor.fetchone()
+        participant_ = Participant(participant, email=email)
         return participant_
     
     def get_participants(self):
         participants = []
-        for participant_key, participant in self.participants.items():
-            participant_ = Participant(participant.participant, email=participant.email)
-            participants.append((participant_key, participant_))
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT ID, PARTICIPANT, EMAIL FROM PARTICIPANT ORDER BY ID"
+            cursor.execute(query)
+            for participant_key, participant, email in cursor:
+                participants.append((participant_key, Participant(participant, email)))
         return participants
 
     ############## COUPLES #####################
 
     def add_couple(self, couple):
-            self._last_couple_key += 1
-            self.couples[self._last_couple_key] = couple
-            return self._last_couple_key
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO COUPLE (PARTNERONE, PARTNERTWO) VALUES (?, ?)"
+            cursor.execute(query, (couple.partner_one, couple.partner_two))
+            connection.commit()
+            couple_key = cursor.lastrowid
+        return couple_key
     
     def update_couple(self, couple_key, couple):
-        self.couples[couple_key] = couple
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE COUPLE SET PARTNERONE = ?, PARTNERTWO = ? WHERE (ID = ?)"
+            cursor.execute(query, (couple.partner_one, couple.partner_two, couple_key))
+            connection.commit()
 
     def delete_couple(self, couple_key):
-        if couple_key in self.couples:
-            del self.couples[couple_key]
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM COUPLE WHERE (ID = ?)"
+            cursor.execute(query, (couple_key,))
+            connection.commit()
     
     def get_couple(self, couple_key):
-        couple = self.couples.get(couple_key)
-        if couple is None:
-            return None
-        couple_ = Couple(couple.partner_one, couple.partner_two)
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT PARTNERONE, PARTNERTWO FROM COUPLE WHERE (ID = ?)"
+            cursor.execute(query, (couple_key,))
+            partner_one, partner_two = cursor.fetchone()
+        couple_ = Couple(partner_one, partner_two=partner_two)
         return couple_
     
     def get_couples(self):
         couples = []
-        for couple_key, couple in self.couples.items():
-            couple_ = Couple(couple.partner_one, couple.partner_two)
-            couples.append((couple_key, couple_))
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT ID, PARTNERONE, PARTNERTWO FROM COUPLE ORDER BY ID"
+            cursor.execute(query)
+            for couple_key, partner_one, partner_two in cursor:
+                couples.append((couple_key, Couple(partner_one, partner_two)))
         return couples
 
 
@@ -71,26 +141,38 @@ class Database:
     ############## COUPLES #####################
 
     def add_assignment(self, assignment):
-            self._last_assignment_key += 1
-            self.assignments[self._last_assignment_key] = assignment
-            return self._last_assignment_key
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO ASSIGNMENT (NAMEONE, NAMETWO) VALUES (?, ?)"
+            cursor.execute(query, (assignment.name1, assignment.name2))
+            connection.commit()
+            assignment_key = cursor.lastrowid
+        return assignment_key
     
     def delete_assignment(self, assignment_key):
-        if assignment_key in self.assignments:
-            del self.assignents[assignment_key]
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM ASSIGNMENT WHERE (ID = ?)"
+            cursor.execute(query, (assignment_key,))
+            connection.commit()
 
     def get_assignment(self, assignment_key):
-        assignment = self.assignments.get(assignment_key)
-        if assignment is None:
-            return None
-        assignment_ = Assignment(assignment.name1, assignment.name2)
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT NAMEONE, NAMETWO FROM ASSIGNMENT WHERE (ID = ?)"
+            cursor.execute(query, (assignment_key,))
+            name1, name2 = cursor.fetchone()
+        assignment_ = Assignment(name1, name2=name2)
         return assignment_
 
     def get_assignments(self):
         assignments = []
-        for assignment_key, assignment in self.assignments.items():
-            assignment_ = Assignment(assignment.name1, assignment.name2)
-            assignments.append((assignment_key, assignment_))
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT ID, NAMEONE, NAMETWO FROM ASSIGNMENT ORDER BY ID"
+            cursor.execute(query)
+            for assignment_key, name1, name2 in cursor:
+                assignments.append((assignment_key, Assignment(name1, name2)))
         return assignments
 
 

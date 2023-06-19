@@ -88,7 +88,7 @@ def drawing(particip, couples):
 
 
 	# print(assignment_dict)
-	db = current_app.config["db"]
+	db = Database(os.path.join(current_app.instance_path, 'group.sql'))
 
 	for name1, name2 in assignment_dict.items():
 		# print(name1)

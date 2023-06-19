@@ -1,4 +1,5 @@
 from datetime import datetime, date
+import os
 
 from flask import abort, current_app, render_template, request, redirect, url_for
 from participants import Participant
@@ -6,6 +7,8 @@ from couples import Couple
 from drawing import drawing
 from forms import ParticipantEditForm, CoupleEditForm
 
+from database import get_db
+from database import Database
 
 def home_page():
     current_year = datetime.now().year
@@ -21,7 +24,7 @@ def home_page():
 
 
 def participants_page():
-    db = current_app.config["db"]
+    db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     if request.method == "GET":
         participants = db.get_participants()
         couples = db.get_couples()
@@ -38,7 +41,7 @@ def participants_page():
         return redirect(url_for("participants_page"))
 
 def participant_page(participant_key):
-    db = current_app.config["db"]
+    db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     participant = db.get_participant(participant_key)
     if participant is None:
         abort(404)
@@ -50,14 +53,14 @@ def participant_add_page():
         participant_name = form.data["participant"]
         email = form.data["email"]
         participant = Participant(participant_name, email=email)
-        db = current_app.config["db"]
+        db = Database(os.path.join(current_app.instance_path, 'group.sql'))
         participant_key = db.add_participant(participant)
         return redirect(url_for("participant_page", participant_key=participant_key))
     return render_template("participant_edit.html", form=form)
 
 
 def participant_edit_page(participant_key):
-    db = current_app.config["db"]
+    db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     participant = db.get_participant(participant_key)
     form = ParticipantEditForm()
     if form.validate_on_submit():
@@ -74,7 +77,7 @@ def participant_edit_page(participant_key):
 ##############
 
 def couples_page():
-    db = current_app.config["db"]
+    db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     if request.method == "GET":
         couples = db.get_couples()
         return render_template("couples.html", couples=sorted(couples))
@@ -85,7 +88,7 @@ def couples_page():
         return redirect(url_for("couples_page"))
 
 def couple_page(couple_key):
-    db = current_app.config["db"]
+    db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     couple = db.get_couple(couple_key)
     if couple is None:
         abort(404)
@@ -103,7 +106,7 @@ def couple_add_page():
     return render_template("couples_edit.html", form=form)
     
 def couple_edit_page(couple_key):
-    db = current_app.config["db"]
+    db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     couple = db.get_couple(couple_key)
     form = CoupleEditForm()
     if form.validate_on_submit():
