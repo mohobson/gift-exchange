@@ -100,7 +100,7 @@ def couple_add_page():
         partner_one = form.data["partner_one"]
         partner_two = form.data["partner_two"]
         couple = Couple(partner_one, partner_two=partner_two)
-        db = current_app.config["db"]
+        db = Database(os.path.join(current_app.instance_path, 'group.sql'))
         couple_key = db.add_couple(couple)
         return redirect(url_for("couple_page", couple_key=couple_key))
     return render_template("couples_edit.html", form=form)
