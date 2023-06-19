@@ -24,6 +24,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 ENV FLASK_APP=app.py
 
+# initialize the database
+RUN flask init-db
+
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
 # For environments with multiple CPU cores, increase the number of workers
