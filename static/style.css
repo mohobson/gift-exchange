@@ -19,7 +19,7 @@ html, body {
     height: 72px;
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    padding: 16px 16px;
     color: #FFFFFF;
     font-size: 32px;
     font-weight: 900;

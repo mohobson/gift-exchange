@@ -138,7 +138,7 @@ class Database:
 
 
 
-    ############## COUPLES #####################
+    ############## ASSIGNMENTS #####################
 
     def add_assignment(self, assignment):
         with sqlite3.connect(self.dbfile) as connection:
@@ -148,6 +148,13 @@ class Database:
             connection.commit()
             assignment_key = cursor.lastrowid
         return assignment_key
+    
+    def update_assignment(self, assignment_key, assignment):
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE ASSIGNMENT SET NAMEONE = ?, NAMETWO = ? WHERE (ID = ?)"
+            cursor.execute(query, (assignment.name1, assignment.name2, assignment_key))
+            connection.commit()
     
     def delete_assignment(self, assignment_key):
         with sqlite3.connect(self.dbfile) as connection:
@@ -166,7 +173,7 @@ class Database:
         return assignment_
 
     def get_assignments(self):
-        assignments = []
+        assignments = [] 
         with sqlite3.connect(self.dbfile) as connection:
             cursor = connection.cursor()
             query = "SELECT ID, NAMEONE, NAMETWO FROM ASSIGNMENT ORDER BY ID"
@@ -175,6 +182,22 @@ class Database:
                 assignments.append((assignment_key, Assignment(name1, name2)))
         return assignments
 
+    def get_latest_assignments(self):
+        assignments = [] 
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT ID, PARTICIPANT, EMAIL FROM PARTICIPANT ORDER BY ID"
+            cursor.execute(query)
+            number_of_latest_assignments = 0
+            # use the number of participants to get the number of assignments
+            for participant_key, participant, email in cursor:
+                number_of_latest_assignments += 1
+            query = f"SELECT ID, NAMEONE, NAMETWO FROM ASSIGNMENT ORDER BY ID DESC LIMIT {number_of_latest_assignments}"
+            cursor.execute(query)
+            for assignment_key, name1, name2 in cursor:
+                print(assignment_key, name1, name2)
+                assignments.append((assignment_key, Assignment(name1, name2)))
+        return assignments
 
 
 

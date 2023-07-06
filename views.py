@@ -37,7 +37,7 @@ def participants_page():
         for form_participant_key in form_participant_keys:
             db.delete_participant(int(form_participant_key))
         for form_couple_key in form_couple_keys:
-            db.delete_couple(int(form_couple_key))
+            db.couple(int(form_couple_key))
         return redirect(url_for("participants_page"))
 
 def participant_page(participant_key):

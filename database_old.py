@@ -70,7 +70,7 @@ class Database:
 
 
 
-    ############## COUPLES #####################
+    ############## ASSIGNMENTS #####################
 
     def add_assignment(self, assignment):
             self._last_assignment_key += 1

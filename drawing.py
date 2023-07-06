@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 from database import Database
-from flask import current_app
+from flask import current_app, request
 
 from assignments import Assignment
 
@@ -97,6 +97,6 @@ def drawing(particip, couples):
 
 
 	# print(db.get_assignments())
-	return db.get_assignments()
+	return db.get_latest_assignments()
 
 
