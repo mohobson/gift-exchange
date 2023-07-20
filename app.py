@@ -7,6 +7,14 @@ import views
 from participants import Participant
 from couples import Couple
 
+
+# how to add Flask mail service:
+# https://mailtrap.io/blog/flask-email-sending/
+
+# how to add blueprints
+# https://flask.palletsprojects.com/en/2.3.x/tutorial/views/
+
+
 messages = [{'name': 'name one',
              'email': 'email one'},
             {'name': 'name two',

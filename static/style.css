@@ -23,9 +23,10 @@ html, body {
     color: #FFFFFF;
     font-size: 32px;
     font-weight: 900;
-    border: 1px solid black;
-    box-shadow: 2px 4px 16px black;
-    border-radius: 8px;
+    /* border: 1px solid black; */
+    border-bottom: 1px solid black;
+    /* box-shadow: 2px 4px 16px black; */
+    /* border-radius: 8px; */
 }
 
 .content {
@@ -40,9 +41,10 @@ html, body {
     width: 30%;
     overflow: hidden;
     padding: 16px;
-    border: 1px solid black;
-    box-shadow: 2px 4px 16px black;
-    border-radius: 16px;
+    /* border: 1px solid black; */
+    border-right: 1px solid black;
+    /* box-shadow: 2px 4px 16px black; */
+    /* border-radius: 16px; */
     transition: width 0.5s ease;
     /* border: 1px solid red; */
 }
@@ -53,6 +55,15 @@ html, body {
 
 .sidebar.show {
     display: block !important;
+    z-index: 10;
+    position: absolute;
+    min-height: 100vh;
+    min-width: 100vh;
+    background-color: #202124;
+}
+
+.sidebar.show .sidebar-content {
+    margin-top: 24px;
 }
 
 .sidebar-content {
@@ -100,9 +111,9 @@ li {
     flex-grow: 1;
     flex-wrap: wrap;
     padding: 32px;
-    border: 1px solid black;
-    box-shadow: 2px 4px 16px black;
-    border-radius: 16px;
+    /* border: 1px solid black; */
+    /* box-shadow: 2px 4px 16px black; */
+    /* border-radius: 16px; */
 }
 
 .message {
