@@ -26,6 +26,7 @@ html, body {
     color: #FFFFFF;
     font-size: 32px;
     font-weight: 900;
+    margin-left: 10px;
     /* border: 1px solid black; */
     border-bottom: 1px solid black;
     /* box-shadow: 2px 4px 16px black; */
@@ -134,6 +135,22 @@ a {
     text-decoration: none;
 }
 
+table {
+    font-size: 8px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+.checkbox {
+    margin: 2px;
+}
+
+.field {
+    margin-bottom: 20px;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+}
 
 /* add some formatting to the table class below */
 
