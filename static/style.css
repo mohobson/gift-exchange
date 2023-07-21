@@ -4,6 +4,7 @@ html, body {
     display: flex;
     flex-grow: 1;
     flex-shrink: 0;
+    max-width: fit-content;
 }
 
 #body {
@@ -42,6 +43,7 @@ html, body {
 .sidebar {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     width: 250px;
     overflow: hidden;
     padding: 16px;
@@ -151,7 +153,3 @@ table {
     display: flex;
     flex-direction: column;
 }
-
-/* add some formatting to the table class below */
-
-/* ^^ */
