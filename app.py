@@ -3,7 +3,7 @@ from flask import Flask, render_template, request
 import os
 import datetime
 import views
-# from database import Database
+from database import Database
 from participants import Participant
 from couples import Couple
 
@@ -27,7 +27,7 @@ def create_app():
 
     # home_dir = os.path.expanduser("~")
     # print(home_dir)
-    print(app.instance_path)
+    # print(app.instance_path)
     app.config.from_mapping(
         DATABASE=os.path.join(app.instance_path, 'group.sql')
     )
@@ -43,8 +43,6 @@ def create_app():
 
     # db = Database(os.path.join(home_dir, "group.sql"))
     # app.config["db"] = db
-    # from . import auth
-    # app.register_blueprint(auth.bp)
 
     app.add_url_rule("/", view_func=views.home_page)
 
@@ -66,14 +64,17 @@ def create_app():
 
 
     # db.add_couple(Couple("Participant 1", "Participant 2"))
-    
+
+    import auth
+    app.register_blueprint(auth.bp)
+
     return app
 
 
-# if __name__ == "__main__":
-app = create_app()
-# port = app.config.get("PORT", 5000)
-# app.run(host='0.0.0.0', port=port, debug=True)
+if __name__ == "__main__":
+    app = create_app()
+    # port = app.config.get("PORT", 5000)
+    app.run()
 
 # helpful links:
 # https://web.itu.edu.tr/uyar/fad/data-model.html
