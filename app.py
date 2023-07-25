@@ -71,10 +71,10 @@ def create_app():
     return app
 
 
-if __name__ == "__main__":
-    app = create_app()
-    # port = app.config.get("PORT", 5000)
-    app.run()
+# if __name__ == "__main__":
+app = create_app()
+    # # port = app.config.get("PORT", 5000)
+    # app.run()
 
 # helpful links:
 # https://web.itu.edu.tr/uyar/fad/data-model.html
