@@ -6,7 +6,7 @@ import views
 from database import Database
 from participants import Participant
 from couples import Couple
-
+import auth
 
 # how to add Flask mail service:
 # https://mailtrap.io/blog/flask-email-sending/
@@ -65,7 +65,6 @@ def create_app():
 
     # db.add_couple(Couple("Participant 1", "Participant 2"))
 
-    import auth
     app.register_blueprint(auth.bp)
 
     return app

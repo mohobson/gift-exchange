@@ -10,6 +10,8 @@ from forms import ParticipantEditForm, CoupleEditForm
 from database import get_db
 from database import Database
 
+from auth import login_required
+
 def home_page():
     current_year = datetime.now().year
     current_month = datetime.now().month
@@ -22,7 +24,7 @@ def home_page():
 
     return render_template("home.html", days=days_until_christmas.days)
 
-
+@login_required
 def participants_page():
     db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     if request.method == "GET":
@@ -40,6 +42,7 @@ def participants_page():
             db.couple(int(form_couple_key))
         return redirect(url_for("participants_page"))
 
+@login_required
 def participant_page(participant_key):
     db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     participant = db.get_participant(participant_key)
@@ -47,6 +50,7 @@ def participant_page(participant_key):
         abort(404)
     return render_template("participant.html", participant=participant)
 
+@login_required
 def participant_add_page():
     form = ParticipantEditForm()
     if form.validate_on_submit():
@@ -58,7 +62,7 @@ def participant_add_page():
         return redirect(url_for("participant_page", participant_key=participant_key))
     return render_template("participant_edit.html", form=form)
 
-
+@login_required
 def participant_edit_page(participant_key):
     db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     participant = db.get_participant(participant_key)
@@ -76,6 +80,7 @@ def participant_edit_page(participant_key):
 
 ##############
 
+@login_required
 def couples_page():
     db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     if request.method == "GET":
@@ -87,6 +92,7 @@ def couples_page():
             db.delete_couple(int(form_couple_key))
         return redirect(url_for("couples_page"))
 
+@login_required
 def couple_page(couple_key):
     db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     couple = db.get_couple(couple_key)
@@ -94,6 +100,7 @@ def couple_page(couple_key):
         abort(404)
     return render_template("couple.html", couple=couple)
 
+@login_required
 def couple_add_page():
     form = CoupleEditForm()
     if form.validate_on_submit():
@@ -105,6 +112,7 @@ def couple_add_page():
         return redirect(url_for("couple_page", couple_key=couple_key))
     return render_template("couples_edit.html", form=form)
     
+@login_required
 def couple_edit_page(couple_key):
     db = Database(os.path.join(current_app.instance_path, 'group.sql'))
     couple = db.get_couple(couple_key)
