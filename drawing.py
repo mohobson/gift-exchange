@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 from database import Database
-from flask import current_app, request
+from flask import current_app, request, session
 
 from assignments import Assignment
 
@@ -89,14 +89,15 @@ def drawing(particip, couples):
 
 	# print(assignment_dict)
 	db = Database(os.path.join(current_app.instance_path, 'group.sql'))
+	user_id = session.get('user_id')
 
 	for name1, name2 in assignment_dict.items():
 		# print(name1)
 		# print(type(name1))
-		db.add_assignment(Assignment(str(name1), str(name2)))
+		db.add_assignment(user_id, Assignment(str(name1), str(name2)))
 
 
 	# print(db.get_assignments())
-	return db.get_latest_assignments()
+	return db.get_latest_assignments(user_id)
 
 

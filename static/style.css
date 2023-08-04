@@ -38,8 +38,14 @@ html, body {
 .user-header {
     display: flex;
     flex-wrap: wrap;
-    font-size: 8px;
+    font-size: 20px;
     gap: 16px;
+    color: #bdc1c6;
+}
+
+.user-header li a {
+    color: #bdc1c6;
+    text-decoration: none;
 }
 
 .content {
@@ -139,7 +145,7 @@ li {
     background-color: #87CEFA;
 }
 
-a {
+.menu-links li a {
     font-size: 2em;
     color: #bdc1c6;
     text-decoration: none;
