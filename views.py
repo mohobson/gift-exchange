@@ -36,11 +36,16 @@ def participants_page():
     else:
         form_participant_keys = request.form.getlist("participantKeys")
         form_couple_keys = request.form.getlist("coupleKeys")
+        form_assignment_keys = request.form.getlist("assignmentKeys")
+        # get button! form info and trigger email function
         # print(form_participant_keys)
         for form_participant_key in form_participant_keys:
             db.delete_participant(user_id, int(form_participant_key))
         for form_couple_key in form_couple_keys:
             db.delete_couple(user_id, int(form_couple_key))
+        # for form_assignment_key in form_assignment_keys:
+        #     db.send_email(user_id, int(form_assignment_key))
+
         return redirect(url_for("participants_page"))
 
 @login_required
@@ -135,6 +140,32 @@ def couple_edit_page(couple_key):
     form.partner_two.data = couple.partner_two if couple.partner_two else ""
     return render_template("couples_edit.html", form=form)
 #######################
+
+########### EMAIL ###########
+
+
+@login_required
+def email_confirmation_page():
+    db = Database(os.path.join(current_app.instance_path, 'group.sql'))
+    user_id = session.get('user_id')
+    if request.method == "GET":
+        assignments = db.get_latest_assignments(user_id)
+        return render_template("email_confirmation.html", assignments=sorted(assignments))
+    
+@login_required
+def email_sent_page():
+    db = Database(os.path.join(current_app.instance_path, 'group.sql'))
+    user_id = session.get('user_id')
+    if request.method == "GET":
+        assignments = db.get_latest_assignments(user_id)
+        for assignment_key, assignment in assignments:
+            print(assignment.name1)
+            print(assignment.name2)
+            send_email = db.send_email(user_id, assignment_key)
+        return render_template("sent_email.html", assignments=sorted(assignments))
+
+
+########### EMAIL ###########
 
 ########### VALIDATION ###########
 

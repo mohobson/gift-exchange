@@ -55,14 +55,20 @@
     </form>
     {% endif %}
 
-    <form>
-        <div class="field is-grouped">
-            <div class="control">
-              <input type="submit" value="button!"/>
-            </div>
-        </div>
+    {% if assignments %}
+    <form action="" method="post" name="assignment_list">
+        <table class="table is-striped is-fullwidth">
+            {% for assignment_key, assignment in assignments %}
+                <label class="hidden">
+                    <input type="hidden" name="assignmentKeys" value="{{ assignment_key }}"/>
+                </label>
+            {% endfor %}
+        </table>
         
+        <a href="{{ url_for('email_confirmation_page', assignments=assignments) }}">Send Email</a>
+
     </form>
+    {% endif %}
 
 
     <div class="assignments">

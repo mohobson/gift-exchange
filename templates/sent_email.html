@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Email Sent{% endblock %}
+{% block content %}
+    <h1 class="title">Email Sent</h1>
+
+    <div>
+        Email Sent
+    </div>
+
+    {% if assignments %}
+    <form action="" method="post" name="assignment_list">
+        <table class="table is-striped is-fullwidth">
+            {% for assignment_key, assignment in assignments %}
+                <label>
+                    <input type="hidden" name="assignmentKeys" value="{{ assignment_key }}"/>
+                    {{ assignment.name1 }}
+                    {{ assignment.name2 }}
+                </label>
+            {% endfor %}
+        </table>
+
+    </form>
+    {% endif %}
+
+{% endblock %}

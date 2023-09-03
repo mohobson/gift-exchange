@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 import click
 from flask import current_app, g
@@ -7,6 +8,10 @@ from flask.cli import with_appcontext
 from participants import Participant
 from couples import Couple
 from assignments import Assignment
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 def get_db():
     if 'db' not in g:
@@ -44,6 +49,34 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+
+def write_email(subject, toaddr, body):
+    from dotenv import load_dotenv
+    load_dotenv()
+
+    FROM_EMAIL = os.getenv('FROM_EMAIL')
+    EMAIL_APP_PASS = os.getenv('EMAIL_APP_PASS')
+
+    msg = MIMEMultipart()
+
+    msg['From'] = FROM_EMAIL
+    msg['To'] = toaddr
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(body, 'plain'))
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    try:
+        server.login(FROM_EMAIL, EMAIL_APP_PASS)
+    except smtplib.SMTPAuthenticationError:
+        print('SMTP AuthenticationError')
+    text = msg.as_string()
+    try:
+        server.sendmail(FROM_EMAIL, toaddr, text)
+    except smtplib.SMTPSenderRefused:
+        print('SMTP SenderRefused')
+    server.quit()
 
 class Database:
     def __init__(self, dbfile):
@@ -199,6 +232,27 @@ class Database:
                 assignments.append((assignment_key, Assignment(name1, name2)))
         return assignments
 
+    def send_email(self, user_id, assignment_key):
 
+        #need to get all emails in a list
+        #need to send each email with assigned name like "p1, you get a gift for p2"
 
+        with sqlite3.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT NAMEONE, NAMETWO FROM ASSIGNMENT WHERE (ID = ?) AND (user_id = ?)"
+            cursor.execute(query, (assignment_key, user_id))
+            name1, name2 = cursor.fetchone()
+
+            cursor2 = connection.cursor()
+            query2 = "SELECT EMAIL FROM PARTICIPANT WHERE PARTICIPANT = ? AND (user_id = ?)"
+            cursor2.execute(query2, (name1, user_id))
+            for email, in cursor2:
+                subject = "Hey " + name1
+                toaddr = email
+                body = name1 + ', get a gift for ' + name2
+                write_email(subject, toaddr, body)
+                print('toaddr: ', toaddr)
+                print('email body: ', body)
+        return
     
+

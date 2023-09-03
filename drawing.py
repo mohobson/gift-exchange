@@ -71,21 +71,6 @@ def drawing(particip, couples):
 		##################################### COUPLES #####################################
 
 
-	# from dotenv import load_dotenv
-	# load_dotenv()
-
-	# send emails
-	# import grid
-	# fromaddr = os.environ.get('fromaddr')
-	# subject = 'Gift Exchange Time'
-
-
-
-	# for member, addr in participants.items():
-	# 	name = dictionary[member]
-	# 	print(member, name)
-		# grid.sendgrid_email(addr, fromaddr, subject, name)
-
 
 	# print(assignment_dict)
 	db = Database(os.path.join(current_app.instance_path, 'group.sql'))

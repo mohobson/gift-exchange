@@ -56,6 +56,9 @@ def create_app():
     app.add_url_rule("/couples/<int:couple_key>/edit", view_func=views.couple_edit_page, methods=["GET", "POST"])
     app.add_url_rule("/new-couple", view_func=views.couple_add_page, methods=["GET", "POST"])
 
+    app.add_url_rule("/email-confirmation", view_func=views.email_confirmation_page, methods=["GET", "POST"])
+    app.add_url_rule("/sent-email", view_func=views.email_sent_page, methods=["GET", "POST"])
+
     # add some temporary participants and one couple for testing purposes
     # db.add_participant(Participant("Participant 1", email="p1@aol.com"))
     # db.add_participant(Participant("Participant 2", email="p2@aol.com"))
