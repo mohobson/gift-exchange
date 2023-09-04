@@ -1,9 +1,24 @@
 {% extends 'base.html' %}
-
-
-
 {% block title %}Gift Exchange{% endblock %}
 {% block content %}
-    <h1>Home Page</h1>
-    <p>Only {{ days }} days until Christmas</p>
+
+    <div class="home">
+        <h1 class="title">Home Page</h1>
+        <p>Only {{ days }} days until Christmas!</p>
+        <p>
+            Welcome to the free gift exchange automator.
+            To get started, click on the Add Participants
+            tab and input the names and emails of everyone
+            participating in your gift exchange. If desired,
+            couples can be specified on the Add Couples
+            tab to prevent them from being assigned to 
+            each other.
+        </p>
+        <p>
+            When you're finished, click Notify Participants
+            to send out an automated email that will
+            let each participant know who to get a gift for.
+            It's as simple as that, happy gifting!
+        </p>
+    </div>
 {% endblock %}

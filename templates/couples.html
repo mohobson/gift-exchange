@@ -1,33 +1,52 @@
 {% extends 'base.html' %}
 {% block title %}Couples{% endblock %}
 {% block content %}
-    <h1 class="title">Couples</h1>
 
-    {% if couples %}
-    <form action="" method="post" name="couple_list">
-        <table class="table is-striped is-fullwidth">
-            {% for couple_key, couple in couples %}
-            <tr>
-                <td>
-                    <label class="checkbox">
-                        <input type="checkbox" name="coupleKeys" value="{{ couple_key }}"/>
-                    </label>
-                    <a href="{{ url_for('couple_page', couple_key=couple_key) }}">
-                        {{ couple.partner_one }}
-                        {{ couple.partner_two }}
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        
-        <div class="field is-grouped">
-            <div class="control">
-              <button class="button is-danger is-small">Delete</button>
+    <div class="couples">
+        {% if couples %}
+        <h1 class="title">Couples</h1>
+        <form action="" method="post" name="couple_list">
+            <table class="table is-striped is-fullwidth">
+                {% for couple_key, couple in couples %}
+                <tr>
+                    <td>
+                        <label class="checkbox">
+                            <input type="checkbox" name="coupleKeys" value="{{ couple_key }}"/>
+                        </label>
+                        <a href="{{ url_for('couple_page', couple_key=couple_key) }}">
+                            {{ couple.partner_one }} and 
+                            {{ couple.partner_two }}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+            <div class="field is-grouped">
+                <div class="control">
+                <button class="button is-danger is-small">Delete</button>
+                </div>
             </div>
-        </div>
-    </form>
-    {% endif %}
+        </form>
+        {% else %}
+            <table>
+                <tr>
+                    <td>
+                        There are currently no couples
+                        listed in your gift exchange. If
+                        desired, click below to add 
+                        couples so they can't draw each
+                        others' names!
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{{ url_for('couple_add_page') }}">Add Couple</a>
+                    </td>
+                </tr>
+            </table>
+        {% endif %}
+    </div>
 
 
 {% endblock %}

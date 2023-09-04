@@ -1,20 +1,23 @@
 {% extends "base.html" %}
 {% block title %}Email Sent{% endblock %}
 {% block content %}
-    <h1 class="title">Email Sent</h1>
-
-    <div>
-        Email Sent
-    </div>
 
     {% if assignments %}
-    <form action="" method="post" name="assignment_list">
+    <form class="email-confirmation-form" method="post" name="assignment_list">
+        <h1 class="title">Email Sent</h1>
         <table class="table is-striped is-fullwidth">
+            <tr>
+                <td>
+                    Participants have been notified! Let them
+                    know to look out for an email from 
+                    gift.exchange.notify@gmail.com. If it doesn't
+                    show up, it may be in their spam folder.
+                    Happy gifting!
+                </td>
+            </tr>
             {% for assignment_key, assignment in assignments %}
                 <label>
                     <input type="hidden" name="assignmentKeys" value="{{ assignment_key }}"/>
-                    {{ assignment.name1 }}
-                    {{ assignment.name2 }}
                 </label>
             {% endfor %}
         </table>

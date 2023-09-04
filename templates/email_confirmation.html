@@ -1,25 +1,50 @@
 {% extends "base.html" %}
 {% block title %}Confirm{% endblock %}
 {% block content %}
-    <h1 class="title">Confirm</h1>
-
-    <div>
-        Send Email?
-    </div>
 
     {% if assignments %}
-    <form action="" method="post" name="assignment_list">
+    <form class="email-confirmation-form" action="" method="post" name="assignment_list">
+        <h1 class="title">Confirm</h1>
         <table class="table is-striped is-fullwidth">
+            <tr>
+                <td>
+                    Ready to send out the notification email?
+                    Each participant will receive an email from
+                    gift.exchange.notify@gmail.com, telling
+                    who to get a gift for.
+                </td>
+            </tr>
             {% for assignment_key, assignment in assignments %}
                 <label>
                     <input type="hidden" name="assignmentKeys" value="{{ assignment_key }}"/>
-                    {{ assignment.name1 }}
-                    {{ assignment.name2 }}
                 </label>
             {% endfor %}
+
+            <tr>
+                <td>
+                    <a href="{{ url_for('email_sent_page', assignments=assignments) }}">Yes</a>
+                </td>
+            </tr>
+        </table>
+
+    {% else %}
+        <table>
+            <tr>
+                <td>
+                    There are currently no participants
+                    listed in your gift exchange. Click
+                    below to add them!
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{{ url_for('participant_add_page') }}">Add Participants</a>
+                </td>
+            </tr>
         </table>
         
-        <a href="{{ url_for('email_sent_page', assignments=assignments) }}">Yes</a>
+
+        
     </form>
     {% endif %}
 

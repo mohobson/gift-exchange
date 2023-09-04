@@ -1,59 +1,101 @@
 {% extends 'base.html' %}
 {% block title %}Participants{% endblock %}
 {% block content %}
-    <h1 class="title">Participants</h1>
-    
-    {% if participants %}
-    <form action="" method="post" name="participant_list">
-        <table class="table is-striped is-fullwidth">
-            {% for participant_key, participant in participants %}
-            <tr>
-                <td>
-                    <label class="checkbox">
-                        <input type="checkbox" name="participantKeys" value="{{ participant_key }}"/>
-                    </label>
-                    <a href="{{ url_for('participant_page', participant_key=participant_key) }}">
-                        {{ participant.participant }}
-                        {% if participant.email %} ({{ participant.email }}) {% endif %}
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+    <div class="couples-and-participants">
+        <div class="participants">
+        {% if participants %}
+            <h1 class="title">Participants</h1>
+            <form action="" method="post" name="participant_list">
+                <table class="table is-striped is-fullwidth">
+                    {% for participant_key, participant in participants %}
+                    <tr>
+                        <td>
+                            <label class="checkbox">
+                                <input type="checkbox" name="participantKeys" value="{{ participant_key }}"/>
+                            </label>
+                            <a href="{{ url_for('participant_page', participant_key=participant_key) }}">
+                                {{ participant.participant }}
+                                {% if participant.email %}
+                                    <i style="font-size:12px; ">{{ participant.email }}</i>
+                                {% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
 
-        <div class="field is-grouped">
-            <div class="control">
-              <button class="button is-danger is-small">Delete</button>
-            </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-danger is-small">Delete</button>
+                    </div>
+                </div>
+            </form>
+
+            {% else %}
+            <table>
+                <tr>
+                    <td>
+                        To get started, add the participants of your gift exchange!
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{{ url_for('participant_add_page') }}">Add Participant</a>
+                    </td>
+                </tr>
+            </table>        
+        {% endif %}
         </div>
-    </form>
-    {% endif %}
 
-    {% if couples %}
-    <form action="" method="post" name="couple_list">
-        <table class="table is-striped is-fullwidth">
-            {% for couple_key, couple in couples %}
-            <tr>
-                <td>
-                    <label class="checkbox">
-                        <input type="checkbox" name="coupleKeys" value="{{ couple_key }}"/>
-                    </label>
-                    <a href="{{ url_for('couple_page', couple_key=couple_key) }}">
-                        {{ couple.partner_one }}
-                        {{ couple.partner_two }}
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
         
-        <div class="field is-grouped">
-            <div class="control">
-              <button class="button is-danger is-small">Delete</button>
-            </div>
+
+        <div class="couples">
+        {% if couples %}
+            <h1 class="title">Couples</h1>
+            <form action="" method="post" name="couple_list">
+                <table class="table is-striped is-fullwidth">
+                    {% for couple_key, couple in couples %}
+                    <tr>
+                        <td>
+                            <label class="checkbox">
+                                <input type="checkbox" name="coupleKeys" value="{{ couple_key }}"/>
+                            </label>
+                            <a href="{{ url_for('couple_page', couple_key=couple_key) }}">
+                                {{ couple.partner_one }} and 
+                                {{ couple.partner_two }}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-danger is-small">Delete</button>
+                    </div>
+                </div>
+            </form>
+
+            {% else %}
+            <table>
+                <tr>
+                    <td>
+                        There are currently no couples
+                        listed in your gift exchange. If
+                        desired, click below to add 
+                        couples so they can't draw each
+                        others' names!
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{{ url_for('couple_add_page') }}">Add Couple</a>
+                    </td>
+                </tr>
+            </table>
+        {% endif %}
         </div>
-    </form>
-    {% endif %}
+    </div>
 
     {% if assignments %}
     <form action="" method="post" name="assignment_list">
@@ -63,15 +105,18 @@
                     <input type="hidden" name="assignmentKeys" value="{{ assignment_key }}"/>
                 </label>
             {% endfor %}
+            <tr>
+                <td>
+                    <a class="send-email-button" href="{{ url_for('email_confirmation_page', assignments=assignments) }}">Notify Participants</a>
+                </td>
+            </tr>
         </table>
         
-        <a href="{{ url_for('email_confirmation_page', assignments=assignments) }}">Send Email</a>
-
     </form>
     {% endif %}
 
 
-    <div class="assignments">
+    <!-- <div class="assignments">
         <p>Assignments are shown for testing purposes only. Remove for v1</p>
         {% if assignments %}
         <table class="table is-striped is-fullwidth">
@@ -87,6 +132,6 @@
         
         </table>
         {% endif %}
-    </div>
+    </div> -->
 
 {% endblock %}
