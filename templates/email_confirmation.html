@@ -19,10 +19,10 @@
                     <input type="hidden" name="assignmentKeys" value="{{ assignment_key }}"/>
                 </label>
             {% endfor %}
-
+            
             <tr>
-                <td>
-                    <a href="{{ url_for('email_sent_page', assignments=assignments) }}">Yes</a>
+                <td style="justify-content: center;">
+                    <a style="margin-left: 0px;" class="email-confirmation-button" href="{{ url_for('email_sent_page', assignments=assignments) }}">Yes</a>
                 </td>
             </tr>
         </table>
