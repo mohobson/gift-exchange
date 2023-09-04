@@ -24,7 +24,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 16px 16px 16px;
+    padding: 16px 16px 24px 16px;
     color: #FFFFFF;
     font-size: 44px;
     font-weight: 900;
@@ -120,6 +120,13 @@ html, body {
 }
 
 @media (max-width:720px) {
+    .content {
+      flex-direction: column;
+      gap: 0px;
+    }
+  }
+
+@media (max-width:720px) {
     .sidebar {
       width: 3rem;
       height: 3rem;
@@ -197,7 +204,13 @@ table {
     border-spacing: 0 24px;
 }
 
+table tr td {
+    display: flex;
+    align-items: center;
+}
+
 table tr td a {
+    display: inline-block;
     text-decoration: none;
     color: #202124;
     border: 1px solid black;
