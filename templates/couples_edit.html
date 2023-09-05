@@ -9,7 +9,7 @@
       <div class="field">
         <label for="partner_one" class="label">Partner One</label>
         <div class="control">
-          {{ form.partner_one(required=True, autofocus=True, class='input') }}
+          {{ form.partner_one(required=True, autofocus=False, class='input') }}
         </div>
 
         {% for error in form.partner_one.errors %}
@@ -22,7 +22,7 @@
       <div class="field">
         <label for="partner_two" class="label">Partner Two</label>
         <div class="control">
-          {{ form.partner_two(class='input') }}
+          {{ form.partner_two(required=True, autofocus=False, class='input') }}
         </div>
 
         {% for error in form.partner_two.errors %}
