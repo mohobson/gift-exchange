@@ -16,15 +16,15 @@ class ParticipantEditForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
 
 class CoupleEditForm(FlaskForm):
-    def get_choices():
-        db = Database(os.path.join(current_app.instance_path, 'group.sql'))
-        user_id = session.get('user_id')
-        participants = db.get_participants(user_id)
-        choices = []
-        for participant_key, participant in participants:
-            choices.append(participant.participant)
-        return choices
-    partner_one = SelectField(choices=get_choices, validators=[DataRequired()])
-    partner_two = SelectField(choices=get_choices, validators=[DataRequired()])
+    # def get_choices():
+    #     db = Database(os.path.join(current_app.instance_path, 'group.sql'))
+    #     user_id = session.get('user_id')
+    #     participants = db.get_participants(user_id)
+    #     choices = []
+    #     for participant_key, participant in participants:
+    #         choices.append(participant.participant)
+    #     return choices
+    partner_one = SelectField(validators=[DataRequired()])
+    partner_two = SelectField(validators=[DataRequired()])
     # partner_one = StringField("Partner One", validators=[DataRequired()])
     # partner_two = StringField("Partner Two", validators=[DataRequired()])
