@@ -15,10 +15,10 @@
 <body>
     <div id="body">
         <div class="header">
-            Gift Exchange
+            <!-- Gift Exchange -->
             <ul class="user-header">
                 {% if g.user %}
-                  <li><span>{{ g.user['username'] }}</span>
+                  <li><span class="username">{{ g.user['username'] }}</span>
                   <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
                 {% else %}
                   <li><a href="{{ url_for('auth.register') }}">Register</a>
