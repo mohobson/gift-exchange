@@ -50,12 +50,17 @@ html, body {
 .user-header li .username {
     color: #FFFFFF;
 }
+
 .user-header li a {
     color: #bdc1c6;
     text-decoration: none;
     white-space: nowrap;
     font-size: 16px;
     padding-left: 8px;
+}
+
+.user-header li .login,
+.user-header li .logout {
     border-left: 2px solid #bdc1c6;
 }
 
@@ -94,6 +99,7 @@ html, body {
     flex-direction: column;
     flex-shrink: 0;
     width: 200px;
+    min-width: max-content;
     overflow: hidden;
     padding: 0px 16px 16px 16px;
     /* border: 1px solid black; */
