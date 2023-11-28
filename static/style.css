@@ -309,3 +309,17 @@ table tr td a:hover {
 .login-register-form {
     gap: 12px;
 }
+
+
+.image {
+    border-radius: 0.25em;
+    border: 0;
+    display: inline-block;
+    position: relative;
+}
+
+    .image.fit {
+        display: block;
+        margin: 0 0 2em 0;
+        width: 100%;
+    }
