@@ -223,7 +223,7 @@ li {
 .home,
 .participants,
 .couples {
-    max-width: 700px;
+    max-width: 100000px;
 }
 
 .home > p {
@@ -317,6 +317,7 @@ table tr td a:hover {
     border-radius: 0.25em;
     border: 0;
     position: relative;
+    max-width: 700px;
 }
 
     .image.fit img {
