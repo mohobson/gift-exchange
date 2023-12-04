@@ -148,7 +148,7 @@ html, body {
     z-index: 1;
     padding: 10px;
     color: #bdc1c6;
-    align-self: left;
+    align-self: start;
 }
 
 @media (max-width:720px) {
