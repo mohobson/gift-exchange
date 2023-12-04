@@ -45,6 +45,7 @@ html, body {
     align-items: flex-end;
     font-size: 20px;
     color: #bdc1c6;
+    padding-right: 8px;
 }
 
 .user-header li .username {
@@ -147,6 +148,7 @@ html, body {
     z-index: 1;
     padding: 10px;
     color: #bdc1c6;
+    align-self: left;
 }
 
 @media (max-width:720px) {
@@ -311,14 +313,13 @@ table tr td a:hover {
 }
 
 
-.image {
+.image img {
     border-radius: 0.25em;
     border: 0;
-    display: inline-block;
     position: relative;
 }
 
-    .image.fit {
+    .image.fit img {
         display: block;
         margin: 0 0 2em 0;
         width: 100%;
