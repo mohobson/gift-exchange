@@ -247,9 +247,9 @@ class Database:
             query2 = "SELECT EMAIL FROM PARTICIPANT WHERE PARTICIPANT = ? AND (user_id = ?)"
             cursor2.execute(query2, (name1, user_id))
             for email, in cursor2:
-                subject = "Hey " + name1
+                subject = "Your Gift Exchange Assignment"
                 toaddr = email
-                body = name1 + ', get a gift for ' + name2
+                body = name1 + ", you've been randomly assigned to get a gift for " + name2 + "!"
                 write_email(subject, toaddr, body)
                 print('toaddr: ', toaddr)
                 print('email body: ', body)

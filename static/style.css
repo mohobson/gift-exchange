@@ -20,7 +20,7 @@ html, body {
 }
 
 .header {
-    height: 72px;
+    min-height: 24px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -95,6 +95,21 @@ html, body {
     gap: 16px;
 }
 
+.block-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    padding: 32px;
+    /* border: 1px solid black; */
+    /* box-shadow: 2px 4px 16px black; */
+    /* border-radius: 16px; */
+}
+
+.block-content.hidden {
+    display: none;
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -164,9 +179,17 @@ html, body {
       height: 3rem;
       border-right: 0px solid black;
     }
-    /* .sidebar-content {
+    .sidebar-content {
       display: none;
-    } */
+    }
+
+    .sidebar-content.show {
+      display: contents;
+      overflow: hidden;
+      white-space: nowrap;
+      margin-left: 10px;
+    }
+
     .menu-button {
       display: block;
     }
@@ -182,17 +205,6 @@ ul {
 li {
     list-style: none;
     margin-bottom: 8px;
-}
-
-.block-content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    flex-wrap: wrap;
-    padding: 32px;
-    /* border: 1px solid black; */
-    /* box-shadow: 2px 4px 16px black; */
-    /* border-radius: 16px; */
 }
 
 .message {
