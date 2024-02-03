@@ -18,7 +18,7 @@ def home_page():
     current_day = datetime.now().day
     
     today = date(current_year, current_month, current_day)
-    christmas = date(2023, 12, 25)
+    christmas = date(current_year, 12, 25)
     days_until_christmas = christmas - today
     #day_name = today.strftime("%A")
 
