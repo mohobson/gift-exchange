@@ -228,7 +228,7 @@ class Database:
             query = f"SELECT ID, NAMEONE, NAMETWO FROM ASSIGNMENT WHERE (user_id = ?) ORDER BY ID DESC LIMIT {number_of_latest_assignments}"
             cursor.execute(query, (user_id,))
             for assignment_key, name1, name2 in cursor:
-                print(assignment_key, name1, name2)
+                # print(assignment_key, name1, name2)
                 assignments.append((assignment_key, Assignment(name1, name2)))
         return assignments
 
@@ -251,8 +251,8 @@ class Database:
                 toaddr = email
                 body = name1 + ", you've been randomly assigned to get a gift for " + name2 + "!"
                 write_email(subject, toaddr, body)
-                print('toaddr: ', toaddr)
-                print('email body: ', body)
+                # print('toaddr: ', toaddr)
+                # print('email body: ', body)
         return
     
 

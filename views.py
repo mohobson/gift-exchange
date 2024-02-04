@@ -159,8 +159,8 @@ def email_sent_page():
     if request.method == "GET":
         assignments = db.get_latest_assignments(user_id)
         for assignment_key, assignment in assignments:
-            print(assignment.name1)
-            print(assignment.name2)
+            # print(assignment.name1)
+            # print(assignment.name2)
             send_email = db.send_email(user_id, assignment_key)
         return render_template("sent_email.html", assignments=sorted(assignments))
 
