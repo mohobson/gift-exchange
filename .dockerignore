@@ -4,6 +4,7 @@ screenshots/
 .gitignore
 .env
 .venv/
+.vscode/
 
 *.xlsx
 *.mp4
