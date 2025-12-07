@@ -1,0 +1,11 @@
+__pycache__
+screenshots/
+.DS_Store
+.dockerignore
+.env
+.venv/
+.vscode/
+
+*.xlsx
+*.mp4
+*.mov
